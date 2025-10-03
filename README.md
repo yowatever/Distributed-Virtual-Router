@@ -10,10 +10,22 @@ A high-performance distributed virtual router implementation with separate contr
 - **Modular Design** - Pluggable components for flexibility
 
 ## Architecture| Component        | Language | Responsibility          |
-Control Plane (Python) → Data Plane (C++) → Network Forwarding
-↓ ↓
-Route Management Packet Processing
-
+┌─────────────────┐    HTTP/REST    ┌─────────────────┐
+│   Control Plane │◄───────────────►│    Data Plane   │
+│   (Python)      │                 │   (C++/Python)  │
+│   - API Server  │                 │   - Routing     │
+│   - Route Mgmt  │                 │   - Forwarding  │
+│   - Statistics  │                 │   - Stats       │
+└─────────────────┘                 └─────────────────┘
+         │
+         ▼
+┌─────────────────┐
+│   Management    │
+│   Scripts       │
+│   - start.sh    │
+│   - stop.sh     │
+│   - test.sh     │
+└─────────────────┘
 
 ##  Project Structure
 dvr-project/
