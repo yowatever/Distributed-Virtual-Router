@@ -9,20 +9,26 @@ A high-performance distributed virtual router implementation with separate contr
 - **High Performance** - Optimized packet forwarding engine
 - **Modular Design** - Pluggable components for flexibility
 
-## 🏗️ Architecture
-Control Plane (Python) → Data Plane (C++) → Network Forwarding
-ↆ ↆ
-Route Management Packet Processing
+## Architecture| Component        | Language | Responsibility          |
+|------------------|----------|-------------------------|
+| **Control Plane** | Python   | Route management & computation |
+| **Data Plane**    | C++      | High-speed packet forwarding |
 
-## 📁 Project Structure
+
+##  Project Structure
 dvr-project/
-├── control-plane/ # Python control logic
-├── data-plane/ # C++ forwarding engine
+├── control-plane/ # Routing logic & management
+│ ├── control_plane.py
+│ └── requirements.txt
+├── data-plane/ # Packet forwarding engine
+│ ├── src/
+│ ├── include/
+│ └── CMakeLists.txt
 └── README.md
 
 text
 
-## 🛠️ Quick Start
+## Quick Start
 
 ```bash
 git clone https://github.com/yowatever/Distributed-Virtual-Router
