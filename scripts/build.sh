@@ -1,30 +1,17 @@
-#!/bin/bash
-# scripts/build.sh
+echo "=== Building DVR Data Plane (Simple) ==="
 
-echo "=== Building DVR Project ==="
-
-# Build Data Plane (C++)
-echo "🔨 Building Data Plane..."
-cd data-plane
-mkdir -p build
-cd build
-
-# Check if cmake is available
-if command -v cmake &> /dev/null; then
-    cmake ..
-    make -j4
-    echo "✅ Data Plane built: data-plane/build/dvr_data_plane"
+# Check if g++ is available
+if command -v g++ &> /dev/null; then
+    echo "🔨 Building Data Plane with g++..."
+    cd data-plane
+    g++ -std=c++17 -pthread -I include src/main.cpp src/data_plane.cpp -o dvr_data_plane_simple
+    echo "✅ Data Plane built: data-plane/dvr_data_plane_simple"
+    cd ..
 else
-    echo "⚠️  CMake not found. Please install CMake to build the data plane."
-    echo "   On Windows, you can install it from: https://cmake.org/download/"
+    echo "❌ g++ not found. Please install MinGW-w64 or Visual Studio Build Tools"
+    echo "   You can download MinGW from: https://www.mingw-w64.org/"
 fi
 
-cd ../..
-
-# Control Plane (Python) doesn't need compilation
-echo "✅ Control Plane ready: control-plane/control_plane.py (Python)"
+echo "✅ Control Plane ready: control-plane/control_plane.py"
 echo ""
 echo "🎉 Build complete!"
-echo "📁 To run:"
-echo "   Control Plane: python control-plane/control_plane.py"
-echo "   Data Plane:    ./data-plane/build/dvr_data_plane"
