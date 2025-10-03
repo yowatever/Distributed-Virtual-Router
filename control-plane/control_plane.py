@@ -105,7 +105,7 @@ class ControlPlane:
         with self.lock:
             return self.stats.copy()
 
-class DVRRequestHandler(BaseHTTPRequestHandler):
+  class DVRRequestHandler(BaseHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         self.control_plane = ControlPlane()
         super().__init__(*args, **kwargs)
