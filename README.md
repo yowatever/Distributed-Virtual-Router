@@ -9,8 +9,10 @@ A high-performance distributed virtual router implementation with separate contr
 - **High Performance** - Optimized packet forwarding engine
 - **Modular Design** - Pluggable components for flexibility
 
-## Architecture| Component        | Language | Responsibility          |
+## Architecture
 ```
+| Component        | Language | Responsibility          |
+
 ┌─────────────────┐    HTTP/REST    ┌─────────────────┐
 │   Control Plane │◄───────────────►│    Data Plane   │
 │   (Python)      │                 │   (C++/Python)  │
