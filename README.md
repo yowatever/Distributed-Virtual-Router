@@ -10,6 +10,7 @@ A high-performance distributed virtual router implementation with separate contr
 - **Modular Design** - Pluggable components for flexibility
 
 ## Architecture| Component        | Language | Responsibility          |
+```
 ┌─────────────────┐    HTTP/REST    ┌─────────────────┐
 │   Control Plane │◄───────────────►│    Data Plane   │
 │   (Python)      │                 │   (C++/Python)  │
@@ -26,13 +27,15 @@ A high-performance distributed virtual router implementation with separate contr
 │   - stop.sh     │
 │   - test.sh     │
 └─────────────────┘
-
+```
 ##  Project Structure
+```
 dvr-project/
 ├── control-plane/ # Python control logic
 ├── data-plane/ # C++ forwarding engine
 └── README.md
-text
+```
+
 
 ## Quick Start
 
