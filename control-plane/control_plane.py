@@ -48,56 +48,6 @@ class ControlPlane:
             return False
     
     def get_routes(self):
-# control-plane/control_plane.py
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import json
-import threading
-from datetime import datetime
-
-class Route:
-    def __init__(self, destination, next_hop, metric=100):
-        self.destination = destination
-        self.next_hop = next_hop
-        self.metric = metric
-    
-    def to_dict(self):
-        return {
-            'destination': self.destination,
-            'next_hop': self.next_hop,
-            'metric': self.metric
-        }
-
-class ControlPlane:
-    def __init__(self):
-        self.routes = {}
-        self.stats = {
-            'start_time': datetime.now().isoformat(),
-            'routes_added': 0,
-            'routes_deleted': 0,
-            'api_requests': 0
-        }
-        self.lock = threading.Lock()
-        
-        # Add default routes
-        self.add_route(Route("10.0.0.0/24", "192.168.1.1", 100))
-        self.add_route(Route("172.16.0.0/16", "192.168.1.2", 200))
-    
-    def add_route(self, route):
-        with self.lock:
-            self.routes[route.destination] = route
-            self.stats['routes_added'] += 1
-            print(f"✓ Route added: {route.destination} -> {route.next_hop} (metric: {route.metric})")
-    
-    def delete_route(self, destination):
-        with self.lock:
-            if destination in self.routes:
-                del self.routes[destination]
-                self.stats['routes_deleted'] += 1
-                print(f"✗ Route deleted: {destination}")
-                return True
-            return False
-    
-    def get_routes(self):
         with self.lock:
             return [route.to_dict() for route in self.routes.values()]
     
@@ -105,7 +55,7 @@ class ControlPlane:
         with self.lock:
             return self.stats.copy()
 
-  class DVRRequestHandler(BaseHTTPRequestHandler):
+class DVRRequestHandler(BaseHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         self.control_plane = ControlPlane()
         super().__init__(*args, **kwargs)
@@ -191,7 +141,7 @@ class ControlPlane:
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {format % args}")
 
 def main():
-    port = 9090  # CHANGED FROM 8080 TO 9090
+    port = 9090
     server = HTTPServer(('localhost', port), DVRRequestHandler)
     
     print(f"🚀 DVR Control Plane (Python) starting on http://localhost:{port}")
